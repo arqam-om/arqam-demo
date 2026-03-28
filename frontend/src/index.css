@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Tajawal', sans-serif;
+
+  --color-primary-50:  #f0f7f4;
+  --color-primary-100: #d8ece4;
+  --color-primary-200: #b3d9cb;
+  --color-primary-300: #7fbfaa;
+  --color-primary-400: #4d9e84;
+  --color-primary-500: #2d7d61;
+  --color-primary-600: #1f6350;
+  --color-primary-700: #1b5e37;
+  --color-primary-800: #174d30;
+  --color-primary-900: #143f27;
+  --color-primary-950: #0a2416;
+
+  --color-gold-300: #e8cc7a;
+  --color-gold-400: #d4b05a;
+  --color-gold-500: #c9a84c;
+  --color-gold-600: #b8922e;
+  --color-gold-700: #9a7520;
+
+  --color-surface: #fafaf7;
+  --color-border: #e8e5df;
+  --color-omani-red: #8b1a1a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background-color: #fafaf7;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
