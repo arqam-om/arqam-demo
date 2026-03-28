@@ -52,7 +52,7 @@ export function StudentDetailPage() {
 
       {/* Header card */}
       {!loading && student && (
-        <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-6 mb-6 text-white flex items-center gap-5 shadow-md">
+        <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-5 lg:p-6 mb-6 text-white flex items-center gap-4 shadow-md flex-wrap">
           <div className="w-16 h-16 rounded-2xl bg-[#c9a84c] flex items-center justify-center text-2xl font-black text-[#1b4332] flex-shrink-0">
             {student.name_ar.charAt(0)}
           </div>
@@ -82,7 +82,7 @@ export function StudentDetailPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-gray-100 rounded-xl p-1 w-fit max-w-full overflow-x-auto">
         {[
           { key: 'info',        label: 'البيانات الشخصية' },
           { key: 'subjects',    label: `المواد (${mySubjects.length})` },

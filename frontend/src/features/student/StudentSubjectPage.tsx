@@ -41,7 +41,7 @@ export function StudentSubjectPage() {
 
       {/* Subject header */}
       <div
-        className="rounded-2xl p-6 mb-6 text-white shadow-md flex items-center gap-4"
+        className="rounded-2xl p-5 lg:p-6 mb-6 text-white shadow-md flex items-center gap-4 flex-wrap"
         style={{ background: `linear-gradient(135deg, ${subj.color}ee, ${subj.color}99)` }}
       >
         <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0">
@@ -66,7 +66,7 @@ export function StudentSubjectPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-5 bg-gray-100 rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-5 bg-gray-100 rounded-xl p-1 w-fit max-w-full overflow-x-auto">
         {tabs.map(t => (
           <button
             key={t.key}

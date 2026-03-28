@@ -14,7 +14,7 @@ export function TeacherAssignments() {
     <div>
       <h1 className="text-2xl font-bold text-gray-900 mb-6">الواجبات</h1>
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           { label: 'معلّقة',      count: counts.pending,   icon: Clock,       color: 'text-amber-700',   bg: 'bg-amber-50',   border: 'border-amber-200' },
           { label: 'تم التسليم',  count: counts.submitted, icon: CheckCircle, color: 'text-blue-700',    bg: 'bg-blue-50',    border: 'border-blue-200' },

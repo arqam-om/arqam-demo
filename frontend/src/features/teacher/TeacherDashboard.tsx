@@ -13,13 +13,13 @@ export function TeacherDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome */}
-      <div className="bg-gradient-to-l from-[#1a2e44] to-[#2a4a6a] rounded-2xl p-6 text-white flex items-center justify-between shadow-md">
+      <div className="bg-gradient-to-l from-[#1a2e44] to-[#2a4a6a] rounded-2xl p-5 lg:p-6 text-white flex items-center justify-between gap-4 shadow-md flex-wrap">
         <div>
           <p className="text-blue-300 text-sm">مرحباً بك 👋</p>
-          <h1 className="text-2xl font-bold mt-1">{currentTeacher.name_ar}</h1>
+          <h1 className="text-xl lg:text-2xl font-bold mt-1">{currentTeacher.name_ar}</h1>
           <p className="text-blue-200 text-sm mt-1">الرياضيات — {teacherClasses.length} صفوف</p>
         </div>
-        <div className="text-left">
+        <div className="text-left flex-shrink-0">
           <p className="text-[#c9a84c] text-xs font-medium">الأحد</p>
           <p className="text-white text-sm">٢٨ مارس ٢٠٢٦</p>
         </div>

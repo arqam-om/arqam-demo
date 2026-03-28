@@ -21,7 +21,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Welcome banner */}
-      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-6 text-white flex items-center justify-between shadow-md">
+      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-5 lg:p-6 text-white flex items-center justify-between gap-4 shadow-md flex-wrap">
         <div>
           <h1 className="text-2xl font-bold">مرحباً، محمد بن سالم 👋</h1>
           <p className="text-[#95d5b2] text-sm mt-1">لوحة التحكم الإدارية — معهد العلوم الإسلامية</p>
@@ -33,7 +33,7 @@ export function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
           <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-[#e8e5df] flex items-center gap-4">
             <div className={`w-13 h-13 w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${s.bg}`}>

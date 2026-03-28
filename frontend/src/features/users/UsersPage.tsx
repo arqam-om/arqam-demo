@@ -50,7 +50,8 @@ export function UsersPage() {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-[#e8e5df] overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[560px]">
           <thead>
             <tr className="bg-[#f0f7f4] border-b border-[#e8e5df]">
               <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">اسم المستخدم</th>
@@ -96,6 +97,7 @@ export function UsersPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

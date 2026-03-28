@@ -18,7 +18,7 @@ export function StudentDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome banner */}
-      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-6 text-white flex items-center justify-between shadow-md">
+      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-5 lg:p-6 text-white flex items-center justify-between gap-4 shadow-md flex-wrap">
         <div>
           <p className="text-[#95d5b2] text-sm">مرحباً بك في منصة أرقم 👋</p>
           <h1 className="text-2xl font-bold mt-1">{currentStudent.name_ar}</h1>

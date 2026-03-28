@@ -34,7 +34,7 @@ export function ProgramsPage() {
             return (
               <div key={g.grade} className="bg-white rounded-2xl shadow-sm border border-[#e8e5df] overflow-hidden">
                 {/* Grade header */}
-                <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] px-6 py-4 flex items-center justify-between">
+                <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] px-5 py-4 flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-[#c9a84c] flex items-center justify-center text-[#1b4332] font-black text-xl flex-shrink-0">
                       {g.grade}
@@ -46,7 +46,7 @@ export function ProgramsPage() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-6 text-center">
+                  <div className="flex items-center gap-4 lg:gap-6 text-center flex-shrink-0">
                     <div>
                       <div className="text-2xl font-black text-[#c9a84c]">{g.student_count}</div>
                       <div className="text-xs text-[#95d5b2]">طالب</div>

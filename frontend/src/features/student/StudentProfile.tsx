@@ -17,10 +17,10 @@ export function StudentProfile() {
   ]
 
   return (
-    <div className="max-w-3xl">
+    <div>
       {/* Profile card */}
-      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-6 mb-6 text-white shadow-md">
-        <div className="flex items-center gap-5">
+      <div className="bg-gradient-to-l from-[#1b4332] to-[#2d6a4f] rounded-2xl p-5 lg:p-6 mb-6 text-white shadow-md">
+        <div className="flex items-center gap-4 flex-wrap">
           <div className="w-20 h-20 rounded-2xl bg-[#c9a84c] flex items-center justify-center text-3xl font-black text-[#1b4332] flex-shrink-0 shadow-lg">
             {currentStudent.name_ar.charAt(0)}
           </div>
@@ -50,7 +50,7 @@ export function StudentProfile() {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           { icon: BookOpen, label: 'عدد المواد', value: mySubjects.length, color: 'text-[#1b4332]', bg: 'bg-[#d8ece4]' },
           { icon: Award,    label: 'واجبات مُسلَّمة', value: `${submitted}/${myAssignments.length}`, color: 'text-blue-700', bg: 'bg-blue-100' },
