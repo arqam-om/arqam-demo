@@ -4,23 +4,23 @@ import { mockUser } from '@/lib/mock-data'
 import logo from '@/assets/logo.jpg'
 import {
   LayoutDashboard,
-  Users,
   GraduationCap,
   BookOpen,
-  ClipboardList,
+  School,
   CalendarCheck,
   UserCog,
+  Users,
   LogOut,
 } from 'lucide-react'
 
 const navItems = [
-  { label: 'لوحة التحكم', to: '/dashboard', icon: LayoutDashboard },
-  { label: 'الطلاب',       to: '/students',  icon: GraduationCap },
-  { label: 'البرامج',      to: '/programs',  icon: BookOpen },
-  { label: 'المقررات',     to: '/courses',   icon: ClipboardList },
-  { label: 'التسجيلات',   to: '/enrollments', icon: Users },
+  { label: 'لوحة التحكم', to: '/dashboard',  icon: LayoutDashboard },
+  { label: 'الطلاب',       to: '/students',   icon: GraduationCap },
+  { label: 'الصفوف',       to: '/programs',   icon: School },
+  { label: 'المواد الدراسية', to: '/courses', icon: BookOpen },
   { label: 'الحضور',       to: '/attendance', icon: CalendarCheck },
-  { label: 'المستخدمون',  to: '/users',     icon: UserCog, adminOnly: true },
+  { label: 'المعلمون',     to: '/enrollments',icon: Users },
+  { label: 'المستخدمون',  to: '/users',      icon: UserCog, adminOnly: true },
 ]
 
 export function Layout() {
@@ -99,7 +99,7 @@ export function Layout() {
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-500">معهد العلوم الإسلامية</span>
             <span className="text-gray-300">|</span>
-            <span className="text-sm font-semibold text-[#1b4332]">منصة أرقم الإدارية</span>
+            <span className="text-sm font-semibold text-[#1b4332]">بوابة الإدارة</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-gray-600">{mockUser.full_name}</span>
