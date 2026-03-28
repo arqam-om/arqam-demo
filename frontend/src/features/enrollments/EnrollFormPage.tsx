@@ -54,7 +54,7 @@ export function EnrollFormPage() {
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-amber-800 text-sm">تم التسجيل في أرقام، لكن تعذّرت المزامنة مع Moodle</p>
+                <p className="font-bold text-amber-800 text-sm">تم التسجيل في أرقم، لكن تعذّرت المزامنة مع Moodle</p>
                 <p className="text-amber-700 text-xs mt-1">سيتم إعادة المحاولة يدوياً من قائمة التسجيلات.</p>
               </div>
             </div>

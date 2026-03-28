@@ -42,7 +42,7 @@ export function Layout() {
             className="w-16 h-16 object-contain rounded-full bg-white p-1"
           />
           <div className="text-center">
-            <div className="text-[#c9a84c] font-bold text-lg leading-tight">أرقام</div>
+            <div className="text-[#c9a84c] font-bold text-lg leading-tight">أرقم</div>
             <div className="text-[#95d5b2] text-xs mt-0.5 leading-snug">معهد العلوم الإسلامية</div>
           </div>
         </div>
@@ -99,7 +99,7 @@ export function Layout() {
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-500">معهد العلوم الإسلامية</span>
             <span className="text-gray-300">|</span>
-            <span className="text-sm font-semibold text-[#1b4332]">منصة أرقام الإدارية</span>
+            <span className="text-sm font-semibold text-[#1b4332]">منصة أرقم الإدارية</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-gray-600">{mockUser.full_name}</span>
