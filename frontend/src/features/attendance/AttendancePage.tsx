@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mockAttendance, mockStudents, mockCourses } from '@/lib/mock-data'
+import { mockAttendance, mockStudents } from '@/lib/mock-data'
+import { subjects } from '@/lib/school-data'
 import { delay, formatDate } from '@/lib/utils'
 import { PageHeader } from '@/components/PageHeader'
 import { AttendanceStatusBadge } from '@/components/StatusBadge'
@@ -10,15 +11,15 @@ import { ClipboardCheck, Pencil } from 'lucide-react'
 export function AttendancePage() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
-  const [courseFilter, setCourseFilter] = useState('all')
+  const [subjectFilter, setSubjectFilter] = useState('all')
 
   useEffect(() => {
     delay(600).then(() => setLoading(false))
   }, [])
 
-  const filtered = courseFilter === 'all'
+  const filtered = subjectFilter === 'all'
     ? mockAttendance
-    : mockAttendance.filter(a => String(a.course_id) === courseFilter)
+    : mockAttendance.filter(a => String(a.course_id) === subjectFilter)
 
   return (
     <div>
@@ -39,13 +40,13 @@ export function AttendancePage() {
       {/* Filters */}
       <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-[#e8e5df] flex flex-wrap gap-3">
         <select
-          value={courseFilter}
-          onChange={e => setCourseFilter(e.target.value)}
+          value={subjectFilter}
+          onChange={e => setSubjectFilter(e.target.value)}
           className="px-3 py-2 border border-gray-200 rounded-lg text-sm text-right bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1b4332]"
         >
-          <option value="all">المقرر: الكل</option>
-          {mockCourses.map(c => (
-            <option key={c.id} value={String(c.id)}>{c.name_ar}</option>
+          <option value="all">المادة: الكل</option>
+          {subjects.map(s => (
+            <option key={s.id} value={String(s.id)}>{s.name_ar}</option>
           ))}
         </select>
         <input
@@ -59,7 +60,7 @@ export function AttendancePage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[#f0f7f4] border-b border-[#e8e5df]">
-              <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">المقرر</th>
+              <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">المادة</th>
               <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">الطالب</th>
               <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">تاريخ الجلسة</th>
               <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">الحالة</th>
@@ -80,11 +81,22 @@ export function AttendancePage() {
             ) : (
               filtered.map(att => {
                 const student = mockStudents.find(s => s.id === att.student_id)
-                const course = mockCourses.find(c => c.id === att.course_id)
+                const subject = subjects.find(s => s.id === att.course_id)
                 return (
                   <tr key={att.id} className="border-b border-gray-100 hover:bg-[#f9fdf9] transition-colors">
-                    <td className="px-4 py-3 font-medium text-gray-800">{course?.name_ar}</td>
-                    <td className="px-4 py-3 text-gray-700">{student?.name_ar}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        {subject ? (
+                          <>
+                            <span className="text-base">{subject.icon}</span>
+                            <span className="font-medium text-gray-800">{subject.name_ar}</span>
+                          </>
+                        ) : (
+                          <span className="text-gray-400">—</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-700">{student?.name_ar ?? '—'}</td>
                     <td className="px-4 py-3 text-gray-500">{formatDate(att.session_date)}</td>
                     <td className="px-4 py-3"><AttendanceStatusBadge status={att.status} /></td>
                     <td className="px-4 py-3 text-gray-500">{att.note ?? '—'}</td>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mockCourses, mockStudents, type AttendanceStatus } from '@/lib/mock-data'
+import { subjects, students } from '@/lib/school-data'
+import { type AttendanceStatus } from '@/lib/mock-data'
 import { delay } from '@/lib/utils'
 import { PageHeader } from '@/components/PageHeader'
 import { ArrowRight, Loader2, CheckCircle, Users } from 'lucide-react'
@@ -22,18 +23,27 @@ const statusColors: Record<AttendanceStatus, string> = {
 export function AttendanceFormPage() {
   const navigate = useNavigate()
   const [step, setStep] = useState<1 | 2>(1)
-  const [courseId, setCourseId] = useState('')
+  const [subjectId, setSubjectId] = useState('')
   const [sessionDate, setSessionDate] = useState(new Date().toISOString().split('T')[0])
   const [saving, setSaving] = useState(false)
 
-  // Step 2: attendance per student
-  const courseStudents = mockStudents.filter(s => s.status === 'active').slice(0, 6)
+  const subject = subjects.find(s => s.id === Number(subjectId))
+
+  // Students enrolled in this subject
+  const subjectStudents = subjectId
+    ? students.filter(s => s.subject_ids.includes(Number(subjectId)))
+    : students
+
   const [records, setRecords] = useState<Record<number, { status: AttendanceStatus; note: string }>>(
-    Object.fromEntries(courseStudents.map(s => [s.id, { status: 'present', note: '' }]))
+    Object.fromEntries(students.map(s => [s.id, { status: 'present', note: '' }]))
   )
 
   function markAllPresent() {
-    setRecords(Object.fromEntries(courseStudents.map(s => [s.id, { status: 'present', note: '' }])))
+    setRecords(prev => {
+      const next = { ...prev }
+      subjectStudents.forEach(s => { next[s.id] = { status: 'present', note: '' } })
+      return next
+    })
   }
 
   function updateRecord(studentId: number, field: 'status' | 'note', value: string) {
@@ -50,8 +60,6 @@ export function AttendanceFormPage() {
     navigate('/attendance')
   }
 
-  const course = mockCourses.find(c => c.id === Number(courseId))
-
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
@@ -63,23 +71,23 @@ export function AttendanceFormPage() {
         <span className="text-sm text-gray-700 font-medium">تسجيل الحضور</span>
       </div>
 
-      <PageHeader title="تسجيل الحضور" subtitle={step === 1 ? 'الخطوة ١ من ٢ — اختيار المقرر والتاريخ' : `الخطوة ٢ من ٢ — ورقة الحضور`} />
+      <PageHeader title="تسجيل الحضور" subtitle={step === 1 ? 'الخطوة ١ من ٢ — اختيار المادة والتاريخ' : `الخطوة ٢ من ٢ — ورقة الحضور`} />
 
       {step === 1 && (
         <div className="bg-white rounded-2xl shadow-sm border border-[#e8e5df] p-6 max-w-md">
           <div className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                المقرر <span className="text-red-500">*</span>
+                المادة الدراسية <span className="text-red-500">*</span>
               </label>
               <select
-                value={courseId}
-                onChange={e => setCourseId(e.target.value)}
+                value={subjectId}
+                onChange={e => setSubjectId(e.target.value)}
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm text-right focus:outline-none focus:ring-2 focus:ring-[#1b4332]"
               >
-                <option value="">اختر المقرر...</option>
-                {mockCourses.map(c => (
-                  <option key={c.id} value={c.id}>{c.name_ar}</option>
+                <option value="">اختر المادة...</option>
+                {subjects.map(s => (
+                  <option key={s.id} value={s.id}>{s.icon} {s.name_ar}</option>
                 ))}
               </select>
             </div>
@@ -98,7 +106,7 @@ export function AttendanceFormPage() {
 
             <button
               onClick={() => setStep(2)}
-              disabled={!courseId || !sessionDate}
+              disabled={!subjectId || !sessionDate}
               className="w-full py-3 bg-[#1b4332] text-white rounded-xl text-sm font-bold hover:bg-[#143f27] transition disabled:opacity-50 shadow-sm"
             >
               متابعة
@@ -111,10 +119,13 @@ export function AttendanceFormPage() {
         <div>
           {/* Sheet header */}
           <div className="bg-white rounded-2xl shadow-sm border border-[#e8e5df] p-4 mb-4 flex items-center justify-between">
-            <div>
-              <span className="font-bold text-gray-900 text-lg">{course?.name_ar}</span>
-              <span className="text-gray-400 mx-2">—</span>
-              <span className="text-gray-600 text-sm">{sessionDate}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{subject?.icon}</span>
+              <div>
+                <span className="font-bold text-gray-900 text-lg">{subject?.name_ar}</span>
+                <span className="text-gray-400 mx-2">—</span>
+                <span className="text-gray-600 text-sm">{sessionDate}</span>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <button
@@ -139,15 +150,17 @@ export function AttendanceFormPage() {
                 <tr className="bg-[#f0f7f4] border-b border-[#e8e5df]">
                   <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">الاسم</th>
                   <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">رقم الهوية</th>
+                  <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">الصف</th>
                   <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">الحالة</th>
                   <th className="px-4 py-3 text-right font-semibold text-[#1b4332]">ملاحظة</th>
                 </tr>
               </thead>
               <tbody>
-                {courseStudents.map(student => (
+                {subjectStudents.map(student => (
                   <tr key={student.id} className="border-b border-gray-100">
                     <td className="px-4 py-3 font-medium text-gray-800">{student.name_ar}</td>
                     <td className="px-4 py-3 font-mono text-gray-500 text-xs">{student.national_id}</td>
+                    <td className="px-4 py-3 text-gray-500 text-xs">{student.grade}{student.section}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1 flex-wrap">
                         {STATUS_OPTIONS.map(opt => (
@@ -182,7 +195,7 @@ export function AttendanceFormPage() {
 
           {/* Sticky footer */}
           <div className="bg-white rounded-2xl shadow-md border border-[#e8e5df] p-4 flex items-center justify-between">
-            <span className="text-sm text-gray-500">{courseStudents.length} طالب</span>
+            <span className="text-sm text-gray-500">{subjectStudents.length} طالب</span>
             <div className="flex gap-3">
               <button
                 onClick={() => setStep(1)}

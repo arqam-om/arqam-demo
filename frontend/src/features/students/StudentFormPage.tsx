@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { mockPrograms } from '@/lib/mock-data'
 import { delay } from '@/lib/utils'
 import { PageHeader } from '@/components/PageHeader'
 import { ArrowRight, Loader2, CheckCircle } from 'lucide-react'
@@ -13,9 +12,9 @@ export function StudentFormPage() {
     national_id: '',
     name_ar: '',
     name_en: '',
-    phone: '',
-    email: '',
-    program_id: '',
+    grade: '',
+    section: '',
+    math_track: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -23,7 +22,8 @@ export function StudentFormPage() {
     const e: Record<string, string> = {}
     if (!form.national_id.trim()) e.national_id = 'رقم الهوية مطلوب'
     if (!form.name_ar.trim()) e.name_ar = 'الاسم بالعربية مطلوب'
-    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'صيغة البريد غير صحيحة'
+    if (!form.grade) e.grade = 'الصف مطلوب'
+    if (!form.section.trim()) e.section = 'الشعبة مطلوبة'
     return e
   }
 
@@ -44,6 +44,8 @@ export function StudentFormPage() {
     setForm(prev => ({ ...prev, [field]: value }))
     setErrors(prev => { const n = { ...prev }; delete n[field]; return n })
   }
+
+  const showMathTrack = form.grade === '11' || form.grade === '12'
 
   return (
     <div>
@@ -67,11 +69,7 @@ export function StudentFormPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <FormField
-            label="رقم الهوية الوطنية"
-            required
-            error={errors.national_id}
-          >
+          <FormField label="رقم الهوية الوطنية" required error={errors.national_id}>
             <input
               type="text"
               value={form.national_id}
@@ -95,7 +93,7 @@ export function StudentFormPage() {
             />
           </FormField>
 
-          <FormField label="الاسم بالإنجليزية" error={errors.name_en}>
+          <FormField label="الاسم بالإنجليزية">
             <input
               type="text"
               value={form.name_en}
@@ -109,43 +107,49 @@ export function StudentFormPage() {
           </FormField>
 
           <div className="grid grid-cols-2 gap-4">
-            <FormField label="رقم الهاتف">
-              <input
-                type="text"
-                value={form.phone}
-                onChange={e => update('phone', e.target.value)}
+            <FormField label="الصف" required error={errors.grade}>
+              <select
+                value={form.grade}
+                onChange={e => { update('grade', e.target.value); update('math_track', '') }}
                 disabled={saving}
-                placeholder="+968 9xxx xxxx"
-                className={inputClass(false)}
-              />
+                className={inputClass(!!errors.grade)}
+              >
+                <option value="">اختر الصف...</option>
+                <option value="10">الصف العاشر</option>
+                <option value="11">الصف الحادي عشر</option>
+                <option value="12">الصف الثاني عشر</option>
+              </select>
             </FormField>
 
-            <FormField label="البريد الإلكتروني" error={errors.email}>
-              <input
-                type="email"
-                value={form.email}
-                onChange={e => update('email', e.target.value)}
+            <FormField label="الشعبة" required error={errors.section}>
+              <select
+                value={form.section}
+                onChange={e => update('section', e.target.value)}
                 disabled={saving}
-                placeholder="example@email.com"
-                dir="ltr"
-                className={inputClass(!!errors.email) + ' text-left'}
-              />
+                className={inputClass(!!errors.section)}
+              >
+                <option value="">اختر الشعبة...</option>
+                <option value="أ">أ</option>
+                <option value="ب">ب</option>
+                <option value="ج">ج</option>
+              </select>
             </FormField>
           </div>
 
-          <FormField label="البرنامج">
-            <select
-              value={form.program_id}
-              onChange={e => update('program_id', e.target.value)}
-              disabled={saving}
-              className={inputClass(false)}
-            >
-              <option value="">بدون برنامج</option>
-              {mockPrograms.map(p => (
-                <option key={p.id} value={p.id}>{p.name_ar}</option>
-              ))}
-            </select>
-          </FormField>
+          {showMathTrack && (
+            <FormField label="مسار الرياضيات">
+              <select
+                value={form.math_track}
+                onChange={e => update('math_track', e.target.value)}
+                disabled={saving}
+                className={inputClass(false)}
+              >
+                <option value="">غير محدد</option>
+                <option value="advanced">رياضيات متقدمة</option>
+                <option value="basic">رياضيات أساسية</option>
+              </select>
+            </FormField>
+          )}
 
           <div className="flex gap-3 pt-2">
             <button

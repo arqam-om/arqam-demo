@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { mockAttendance, mockStudents, mockCourses, type AttendanceStatus } from '@/lib/mock-data'
+import { mockAttendance, mockStudents, type AttendanceStatus } from '@/lib/mock-data'
+import { subjects } from '@/lib/school-data'
 import { delay, formatDate } from '@/lib/utils'
 import { PageHeader } from '@/components/PageHeader'
 import { Skeleton } from '@/components/Skeleton'
@@ -16,7 +17,7 @@ export function AttendanceEditPage() {
 
   const att = mockAttendance.find(a => a.id === Number(id))
   const student = mockStudents.find(s => s.id === att?.student_id)
-  const course = mockCourses.find(c => c.id === att?.course_id)
+  const subject = subjects.find(s => s.id === att?.course_id)
 
   useEffect(() => {
     delay(500).then(() => {
@@ -59,7 +60,7 @@ export function AttendanceEditPage() {
           <>
             {/* Context (read-only) */}
             <div className="bg-gray-50 rounded-xl p-4 mb-6 space-y-2">
-              <Row label="المقرر" value={course?.name_ar ?? '—'} />
+              <Row label="المادة" value={subject ? `${subject.icon} ${subject.name_ar}` : '—'} />
               <Row label="الطالب" value={student?.name_ar ?? '—'} />
               <Row label="التاريخ" value={formatDate(att?.session_date ?? '')} />
               <Row label="سُجِّل بواسطة" value={`${att?.marked_by} — ${att?.created_at}`} />
